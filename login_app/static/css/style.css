@@ -34,3 +34,11 @@ button {
 .error {
     color: red;
 }
+
+.error-display {
+    text-align: center;
+}
+
+.error-display ul {
+    list-style-position: inside;
+}

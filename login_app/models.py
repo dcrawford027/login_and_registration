@@ -3,6 +3,7 @@ from django.core.validators import validate_email
 import bcrypt
 from datetime import *
 from dateutil.relativedelta import *
+import re
 
 # Create your models here.
 class UserManager(models.Manager):
@@ -12,9 +13,8 @@ class UserManager(models.Manager):
             errors['first_name'] = "You must enter a first name at least 2 characters long."
         if len(postData['last_name']) < 2:
             errors['last_name'] = "You must enter a last name at least 2 characters long."
-        if len(postData['email']) < 1:
-            errors['email'] = "You must enter a valid email."
-        elif '@' not in postData['email'] or '.' not in postData['email']:
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+        if not EMAIL_REGEX.match(postData['email']):
             errors['email'] = "The email you entered is not valid."
         usedEmail = User.objects.filter(email=postData['email'])
         if usedEmail:
@@ -23,7 +23,7 @@ class UserManager(models.Manager):
             errors['birthdate'] = "Your birthdate must be in the past."
         userBirthday = datetime.strptime(postData['birthdate'], '%Y-%m-%d')
         if relativedelta(datetime.now(), userBirthday).years < 13:
-            errors['birthday'] = "You must be older than 13 years of age."
+            errors['birthdate'] = "You must be older than 13 years of age."
         if len(postData['pw']) < 8:
             errors['pw'] = "Your password must be 8 characters or more."
         if postData['confirm_pw'] != postData['pw']:

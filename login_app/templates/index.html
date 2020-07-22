@@ -10,13 +10,6 @@
 <body>
     <div class="form-container">
         <h1>Registration</h1>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
         <form action="/register" method="POST">
             {% csrf_token %}
             <p>
@@ -48,13 +41,6 @@
     </div>
     <div class="form-container">
         <h1>Login</h1>
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
         <form action="/login" method="POST">
             {% csrf_token %}
             <p>
@@ -67,6 +53,15 @@
             </p>
             <button type="submit">Log In</button>
         </form>
+    </div>
+    <div class="error-display">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
 </body>
 </html>
