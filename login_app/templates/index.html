@@ -4,64 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login and Registration</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="form-container">
-        <h1>Registration</h1>
-        <form action="/register" method="POST">
-            {% csrf_token %}
-            <p>
-                First Name
-                <input type="text" name="first_name">
-            </p>
-            <p>
-                Last Name
-                <input type="text" name="last_name">
-            </p>
-            <p>
-                Email
-                <input type="email" name="email">
-            </p>
-            <p>
-                Birthdate
-                <input type="date" name="birthdate">
-            </p>
-            <p>
-                Password
-                <input type="password" name="pw">
-            </p>
-            <p>
-                Confirm PW
-                <input type="password" name="confirm_pw">
-            </p>
-            <button type="submit">Register</button>
-        </form>
-    </div>
-    <div class="form-container">
-        <h1>Login</h1>
-        <form action="/login" method="POST">
-            {% csrf_token %}
-            <p>
-                Email
-                <input type="email" name="email">
-            </p>
-            <p>
-                Password
-                <input type="password" name="pw">
-            </p>
-            <button type="submit">Log In</button>
-        </form>
-    </div>
-    <div class="error-display">
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h1>Registration</h1>
+                <form action="/register" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" name="first_name" id="first_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label> 
+                        <input type="text" class="form-control" name="last_name" id="last_name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="birthdate">Birthdate</label>
+                        <input type="date" class="form-control" name="birthdate" id="birthdate">
+                    </div>
+                    <div class="form-group">
+                        <label for="pw">Password</label>
+                        <input type="password" class="form-control" name="pw" id="pw">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirm_pw">Confirm PW</label>
+                        <input type="password" class="form-control" name="confirm_pw" id="confirm_pw">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+            <div class="col-sm">
+                <h1>Login</h1>
+                <form action="/login" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" name="email" id="email"> 
+                    </div>
+                    <div class="form-group">
+                        <label for="pw">Password</label>
+                        <input type="password" class="form-control" name="pw" id="pw">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Log In</button>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            {% if messages %}
+            <ul class="list-group">
+                {% for message in messages %}
+                <li class="list-group-item list-group-item-danger">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>

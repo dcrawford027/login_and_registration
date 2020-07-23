@@ -36,13 +36,14 @@ def login(request):
         return redirect('/success')
 
 def success(request):
-    if request.method == 'GET':
+    if not 'user_id' in request.session:
         return redirect('/')
-    user = User.objects.get(id=request.session['user_id'])
-    context = {
-        'user': user
-    }
-    return render(request, 'success.html', context)
+    else:
+        user = User.objects.get(id=request.session['user_id'])
+        context = {
+            'user': user
+        }
+        return render(request, 'success.html', context)
 
 def logout(request):
     request.session.clear()

@@ -19,10 +19,11 @@ class UserManager(models.Manager):
         usedEmail = User.objects.filter(email=postData['email'])
         if usedEmail:
             errors['email'] = "That email is already registered."
-        if datetime.strptime(postData['birthdate'], '%Y-%m-%d') >= datetime.now():
+        if len(postData['birthdate']) < 1:
+            errors['birthdate'] = "You must select a birthdate."
+        elif datetime.strptime(postData['birthdate'], '%Y-%m-%d') >= datetime.now():
             errors['birthdate'] = "Your birthdate must be in the past."
-        userBirthday = datetime.strptime(postData['birthdate'], '%Y-%m-%d')
-        if relativedelta(datetime.now(), userBirthday).years < 13:
+        elif relativedelta(datetime.now(), datetime.strptime(postData['birthdate'], '%Y-%m-%d')).years < 13:
             errors['birthdate'] = "You must be older than 13 years of age."
         if len(postData['pw']) < 8:
             errors['pw'] = "Your password must be 8 characters or more."
@@ -49,6 +50,8 @@ class User(models.Model):
     email = models.EmailField()
     birthdate = models.DateField()
     password = models.TextField()
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    
     objects = UserManager()
